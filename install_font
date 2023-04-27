@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# set some colors
+CNT="[\e[1;36mNOTE\e[0m]"
+COK="[\e[1;32mOK\e[0m]"
+CER="[\e[1;31mERROR\e[0m]"
+CAT="[\e[1;37mATTENTION\e[0m]"
+CWR="[\e[1;35mWARNING\e[0m]"
+CAC="[\e[1;33mACTION\e[0m]"
+INSTLOG="install.log"
+
+sleep 1
+
+echo -e "\n$CNT - Installing font, this may take a while..."
+for SOFTWR in wqy-microhei wqy-microhei-lite wqy-bitmapfont wqy-zenhei ttf-arphic-ukai ttf-arphic-uming adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts noto-fonts-cjk ttf-cascadia-code
+do
+    #First lets see if the package is there
+    if pacman -Qs $SOFTWR > /dev/null ; then
+        echo -e "$COK - $SOFTWR is already installed."
+    else
+        echo -e "$CNT - Now installing $SOFTWR ..."
+        sudo pacman -S --noconfirm $SOFTWR &>> $INSTLOG
+        if pacman -Qs $SOFTWR > /dev/null ; then
+            echo -e "$COK - $SOFTWR was installed."
+        else
+            echo -e "$CER - $SOFTWR install had failed, please check the install.log"
+            exit
+        fi
+    fi
+done

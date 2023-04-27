@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# set some colors
+CNT="[\e[1;36mNOTE\e[0m]"
+COK="[\e[1;32mOK\e[0m]"
+CER="[\e[1;31mERROR\e[0m]"
+CAT="[\e[1;37mATTENTION\e[0m]"
+CWR="[\e[1;35mWARNING\e[0m]"
+CAC="[\e[1;33mACTION\e[0m]"
+INSTLOG="install.log"
+
+sleep 1
+
+echo -e "\n$CNT - Installing zsh, this may take a while..."
+for SOFTWR in zsh git curl wget
+do
+    #First lets see if the package is there
+    if pacman -Qs $SOFTWR > /dev/null ; then
+        echo -e "$COK - $SOFTWR is already installed."
+    else
+        echo -e "$CNT - Now installing $SOFTWR ..."
+        sudo pacman -S --noconfirm $SOFTWR &>> $INSTLOG
+        if pacman -Qs $SOFTWR > /dev/null ; then
+            echo -e "$COK - $SOFTWR was installed."
+        else
+            echo -e "$CER - $SOFTWR install had failed, please check the install.log"
+            exit
+        fi
+    fi
+done
+
+wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+
+chmod +x install.sh && sh install.sh --unattended 
+
+sleep 1
+
+rm install.sh
+echo -e "$COK - zsh install ok."
+sleep 1
+echo -e "$CNT - Please replace the default shell by yourself !"
+
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+
+curl -sSL "https://github.com/zthxxx/jovial/raw/master/jovial.zsh-theme" -o ~/.oh-my-zsh/custom/themes/jovial.zsh-theme
+
+FILEPATH=~/.zshrc
+if [ -f "$FILEPATH" ]; then 
+    echo -e "$CAT - Config for .zshrc located, backing up."
+    mv $FILEPATH $FILEPATH-back &>> $INSTLOG
+    echo -e "$COK - Backed up .zshrc to $FILEPATH-back."
+fi
+
+echo -e "$CNT - Copying .zshrc config to $DIRPATH."  
+cp -R .zshrc ~/ &>> $INSTLOG

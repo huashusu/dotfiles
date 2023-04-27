@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# set some colors
+CNT="[\e[1;36mNOTE\e[0m]"
+COK="[\e[1;32mOK\e[0m]"
+CER="[\e[1;31mERROR\e[0m]"
+CAT="[\e[1;37mATTENTION\e[0m]"
+CWR="[\e[1;35mWARNING\e[0m]"
+CAC="[\e[1;33mACTION\e[0m]"
+INSTLOG="install.log"
+
+sleep 1
+
+### Install all of the above pacakges ####
+# update the DB first
+echo -e "$COK - Updating yay database..."
+yay -Suy --noconfirm &>> $INSTLOG
+
+#Stage 1
+echo -e "\n$CNT - Stage 1 - Installing main components, this may take a while..."
+for SOFTWR in hyprland alacritty wofi thunar nemo grim slurp swappy swayimg waybar-hyprland swww wlogout swaylock-effects
+do
+    #First lets see if the package is there
+    if yay -Qs $SOFTWR > /dev/null ; then
+        echo -e "$COK - $SOFTWR is already installed."
+    else
+        echo -e "$CNT - Now installing $SOFTWR ..."
+        yay -S --noconfirm $SOFTWR &>> $INSTLOG
+        if yay -Qs $SOFTWR > /dev/null ; then
+            echo -e "$COK - $SOFTWR was installed."
+        else
+            echo -e "$CER - $SOFTWR install had failed, please check the install.log"
+            exit
+        fi
+    fi
+done
+
+#Stage 2
+echo -e "\n$CNT - Stage 2 - Installing additional tools and utilities, this may take a while..."
+for SOFTWR in pulseaudio polkit-gnome otf-font-awesome brightnessctl pavucontrol pamixer pulseaudio-alsa alsa-utils qt5-wayland qt6-wayland xdg-desktop-portal-hyprland-git sddm
+do
+    #First lets see if the package is there
+    if yay -Qs $SOFTWR > /dev/null ; then
+        echo -e "$COK - $SOFTWR is already installed."
+    else
+        echo -e "$CNT - Now installing $SOFTWR ..."
+        yay -S --noconfirm $SOFTWR &>> $INSTLOG
+        if yay -Qs $SOFTWR > /dev/null ; then
+            echo -e "$COK - $SOFTWR was installed."
+        else
+            echo -e "$CER - $SOFTWR install had failed, please check the install.log"
+            exit
+        fi
+    fi
+done
+
+# Enable the sddm login manager service
+echo -e "$CNT - Enabling the SDDM Service..."
+sudo systemctl enable sddm &>> $INSTLOG
+
+sleep 2
+
+# Clean out other portals
+echo -e "$CNT - Cleaning out conflicting xdg portals..."
+yay -R --noconfirm xdg-desktop-portal-gnome xdg-desktop-portal-gtk &>> $INSTLOG

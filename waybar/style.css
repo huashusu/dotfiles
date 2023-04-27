@@ -1,0 +1,138 @@
+* {
+    border: none;
+    border-radius: 0;
+    font-family: FontAwesome, CascadiaCode;
+    font-weight: bold;
+    font-size: 16px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: rgba(21, 18, 27, 0);
+    color: #cdd6f4;
+}
+
+tooltip {
+    background: #1e1e2e;
+    opacity: 0.8;
+    border-radius: 5px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #11111b;
+}
+
+tooltip label {
+    color: #cdd6f4;
+}
+
+#workspaces button {
+    padding: 5px;
+    color: #313244;
+    margin-right: 5px;
+}
+
+#workspaces button.active {
+    color: #a6adc8;
+}
+
+#workspaces button.focused {
+    color: #a6adc8;
+    background: #eba0ac;
+    border-radius: 5px;
+}
+
+#workspaces button.urgent {
+    color: #11111b;
+    background: #a6e3a1;
+    border-radius: 5px;
+}
+
+#workspaces button:hover {
+    background: #11111b;
+    color: #cdd6f4;
+    border-radius: 5px;
+}
+
+#custom-launch_wofi {
+    font-weight: 400;
+}
+
+#custom-launch_wofi,
+#custom-launch_wlogout,
+#window,
+#cpu,
+#disk,
+#keyboard-state,
+#memory,
+#clock,
+#battery,
+#pulseaudio,
+#network,
+#tray,
+#temperature,
+#workspaces,
+#backlight {
+    background: #1e1e2e;
+    opacity: 0.8;
+    padding: 0px 10px;
+    margin: 3px 0px;
+    margin-top: 10px;
+    border: 0px;
+} 
+
+#custom-launch_wofi,#workspaces,#clock,#keyboard-state {
+    border-radius: 5px 0px 0px 5px;
+}
+
+#network,#battery,#custom-launch_wlogout,#tray{
+    border-radius: 0px 5px 5px 0px;
+}
+
+#temperature.critical {
+    color: #e92d4d;
+}
+
+#tray{
+    margin-right: 10px;
+}
+
+#workspaces {
+    padding-right: 0px;
+    padding-left: 5px;
+}
+
+#custom-power_profile {
+    color: #a6e3a1;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#window {
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#custom-launch_wofi {
+    color: #89b4fa;
+    margin-left: 10px;
+    border-right: 0px;
+}
+
+#pulseaudio {
+    color: #89b4fa;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#pulseaudio.microphone {
+    color: #cba6f7;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+#battery {
+    color: #a6e3a1;
+    border-left: 0px;
+    margin-right: 10px;
+}
