@@ -1,0 +1,16 @@
+oh-my-posh init pwsh --config ~/.oh-my-posh/huashusu.json --eval | Invoke-Expression
+
+# 允许运行Install-Module脚本
+# set-executionpolicy remotesigned
+# 更新最新版本的PSReadLine，为了自动补全
+# Install-Module PSReadLine -Force
+# 创建powershell 的初始化脚本，点击确认创建即可
+# notepad $profile
+# 安装几个插件
+# Install-Module posh-git
+# Install-Module Terminal-Icons
+
+Import-Module posh-git
+Import-Module Terminal-Icons
+Set-PSReadLineOption -PredictionSource History -PredictionViewStyle InlineView
+Set-PSReadlineKeyHandler -Key Tab -Function MenuComplete
